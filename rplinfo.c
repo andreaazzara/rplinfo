@@ -52,7 +52,7 @@ ipaddr_add(const uip_ipaddr_t *addr, char *buf)
   }
   return n;
 }
-
+#if 0
 uint16_t create_route_msg(char *buf, uip_ds6_route_t *r)
 {
 	uint8_t n = 0;
@@ -111,7 +111,7 @@ routes_handler(void* request, void* response, uint8_t *buffer, uint16_t preferre
 
 }
 
-
+#endif
 /*  {"eui":"00050c2a8c9d4ea0","pref":"true","etx":124}*/
 /* length of an neighbor entry, must be fixed width */
 uint16_t create_parent_msg(char *buf, rpl_parent_t *parent, uint8_t preferred)
@@ -138,6 +138,7 @@ uint16_t create_parent_msg(char *buf, rpl_parent_t *parent, uint8_t preferred)
 	return n;
 }
 
+
 RESOURCE(parents, METHOD_GET, "rplinfo/parents", "title=\"RPL parent info\";rt=\"Data\"");
 
 static volatile uint8_t cur_neigh_entry;
@@ -146,6 +147,8 @@ static volatile uint8_t entry_char_skip;
 void
 parents_handler(void* request, void* response, uint8_t *buffer, uint16_t preferred_size, int32_t *offset)
 {
+
+printf("Parents handlers\n");
   int32_t strpos = 0;
   uip_ds6_route_t *r;
   volatile uint8_t i;
@@ -208,5 +211,5 @@ parents_handler(void* request, void* response, uint8_t *buffer, uint16_t preferr
 void
 rplinfo_activate_resources(void) {
   rest_activate_resource(&resource_parents);
-  rest_activate_resource(&resource_routes);
+  //rest_activate_resource(&resource_routes);
 }
